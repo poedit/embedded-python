@@ -1,0 +1,3 @@
+#include "versions.config"
+
+MARKETING_VERSION = $(PYTHON_VERSION)
