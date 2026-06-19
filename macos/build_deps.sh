@@ -57,26 +57,6 @@ export PATH
 unset PKG_CONFIG_PATH
 export PKG_CONFIG_LIBDIR="$SDKROOT/usr/lib/pkgconfig:$SDKROOT/usr/share/pkgconfig"
 
-# Check that the tools have appropriate versions.
-if ! make --version 2>/dev/null | grep -q 'GNU Make'; then
-    echo "Error: GNU make required (brew install make)." >&2
-    exit 1
-fi
-if make --version | head -n1 | grep -q 'GNU Make 3\.'; then
-    echo "Error: GNU make >= 4 required (brew install make)." >&2
-    exit 1
-fi
-
-if ! sed --version 2>/dev/null | grep -q 'GNU sed'; then
-    echo "Error: GNU sed required (brew install gnu-sed)." >&2
-    exit 1
-fi
-
-if yacc --version | head -n1 | grep -q 'GNU Bison 2\.'; then
-    echo "Error: GNU bison >= 3 required (brew install bison)." >&2
-    exit 1
-fi
-
 # Use ccache if present, but don't require it.
 ccache_prefix="$(brew --prefix ccache 2>/dev/null || true)"
 if [ -n "$ccache_prefix" ] && [ -d "$ccache_prefix/libexec" ]; then
@@ -96,6 +76,12 @@ if [ "$CONFIGURATION" = "Debug" ]; then
 else
     cflags_config="-O2"
     ldflags_config=""
+fi
+
+if [ "$1" = python ] ; then
+    # hack to avoid building multiple times
+    ARCHS=$NATIVE_ARCH_ACTUAL
+    export ARCHS
 fi
 
 ncpu="$(sysctl -n hw.ncpu 2>/dev/null || getconf _NPROCESSORS_ONLN 2>/dev/null || echo 4)"

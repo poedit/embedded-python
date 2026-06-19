@@ -6,16 +6,16 @@ cd "$(dirname "$0")/.."
 
 . ./versions.config
 
-: "${GETTEXT_VERSION:?}"
+: "${PYTHON_VERSION:?}"
 
-name=GettextTools
+name=Python
 build_dir=build/macos
 archive_path="$build_dir/macosx.xcarchive"
 xcframework_path="$build_dir/$name.xcframework"
 package_path="$build_dir/$name-package"
 zip_name="$name.xcframework.zip"
 zip_path="$build_dir/$zip_name"
-url="https://github.com/poedit/gettext-tools/releases/download/v$GETTEXT_VERSION/$zip_name"
+url="https://github.com/poedit/python-framework/releases/download/v$PYTHON_VERSION/$zip_name"
 
 mkdir -p "$build_dir"
 rm -rf "$archive_path" "$xcframework_path" "$package_path" "$zip_path"
@@ -33,13 +33,6 @@ xcodebuild -create-xcframework \
 
 mkdir -p "$package_path/bin"
 cp -a "$xcframework_path" "$package_path/"
-
-helpers_path="$(find "$package_path/$name.xcframework" -path "*/$name.framework/Versions/A/Helpers" -type d -print -quit)"
-helpers_path="${helpers_path#$package_path/}"
-(
-    cd "$package_path/bin"
-    ln -s "../$helpers_path"/* .
-)
 
 (
     cd "$package_path"
