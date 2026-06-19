@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		B27115F8170830A800B936D5 /* deps.gettext */ = {
+		B27115F8170830A800B936D5 /* deps.openssl */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = B27115F9170830A800B936D5 /* Build configuration list for PBXAggregateTarget "deps.gettext" */;
+			buildConfigurationList = B27115F9170830A800B936D5 /* Build configuration list for PBXAggregateTarget "deps.openssl" */;
 			buildPhases = (
 				B2C129D921C6CBAF004364B2 /* Autoconf Build */,
 			);
 			dependencies = (
 			);
-			name = deps.gettext;
+			name = deps.openssl;
 			productName = deps.gettext;
 		};
 /* End PBXAggregateTarget section */
@@ -145,7 +145,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B27115F8170830A800B936D5 /* deps.gettext */,
+				B27115F8170830A800B936D5 /* deps.openssl */,
 				B2A705E52FDAB55400DCE685 /* GettextTools */,
 			);
 		};
@@ -190,18 +190,18 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/macos/build_deps_gettext.sh",
+				"$(SRCROOT)/macos/build_deps_openssl.sh",
 				"$(SRCROOT)/versions.config",
 			);
 			name = "Autoconf Build";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/gettext-binaries.done",
+				"$(DERIVED_FILE_DIR)/openssl-binaries.done",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\ncd macos\n./build_deps.sh gettext\ntouch \"${DERIVED_FILE_DIR}/gettext-binaries.done\"\n";
+			shellScript = "set -e\ncd macos\n./build_deps.sh openssl\ntouch \"${DERIVED_FILE_DIR}/openssl-binaries.done\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -218,7 +218,7 @@
 /* Begin PBXTargetDependency section */
 		B2A705EF2FDAB56200DCE685 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B27115F8170830A800B936D5 /* deps.gettext */;
+			target = B27115F8170830A800B936D5 /* deps.openssl */;
 			targetProxy = B2A705EE2FDAB56200DCE685 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -488,7 +488,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B27115F9170830A800B936D5 /* Build configuration list for PBXAggregateTarget "deps.gettext" */ = {
+		B27115F9170830A800B936D5 /* Build configuration list for PBXAggregateTarget "deps.openssl" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B27115FA170830A800B936D5 /* Debug */,
