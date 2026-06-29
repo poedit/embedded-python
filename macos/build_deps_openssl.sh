@@ -29,7 +29,7 @@ download_openssl() {
 
 download_openssl
 
-rm -rf "$WORKDIR" "$DESTDIR"
+rm -rf "$WORKDIR" "$DEPS_DESTDIR"
 mkdir -p "$WORKDIR" "$INTDIR"
 
 echo "Building OpenSSL for $ARCH..."
@@ -40,7 +40,7 @@ cd "$WORKDIR"
 ./Configure darwin64-${ARCH}-cc no-shared no-zlib no-tests --prefix=/
 
 make
-make install_sw DESTDIR="$DESTDIR"
+make install_sw DESTDIR="$DEPS_DESTDIR"
 
 rm -rf "$WORKDIR"
 touch "$INTDIR/$target.done"

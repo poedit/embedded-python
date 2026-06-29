@@ -29,7 +29,7 @@ download_python() {
 
 download_python
 
-rm -rf "$WORKDIR" "$DESTDIR"
+rm -rf "$WORKDIR" "$DEPS_DESTDIR"
 mkdir -p "$WORKDIR" "$INTDIR"
 
 echo "Building Python..."
@@ -63,10 +63,10 @@ fi
     --with-ensurepip=no
 
 make
-make install -j1 DESTDIR="$DESTDIR/"
+make install -j1 DESTDIR="$DEPS_DESTDIR/"
 
-mv $DESTDIR/@rpath/* $DESTDIR/
-$TOP_SRCDIR/sanitize-python-framework.sh $DESTDIR/Python.framework
+mv "$DEPS_DESTDIR"/@rpath/* "$DEPS_DESTDIR"/
+"$TOP_SRCDIR/sanitize-python-framework.sh" "$DEPS_DESTDIR/Python.framework"
 
 rm -rf "$WORKDIR"
 touch "$INTDIR/$target.done"
