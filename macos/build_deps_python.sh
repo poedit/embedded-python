@@ -52,9 +52,11 @@ fi
     CXXFLAGS="$CXXFLAGS" \
     LDFLAGS="$LDFLAGS" \
     MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET \
-    --disable-static \
     --enable-framework=@rpath \
     $python_universal_sdk_flags \
+    --without-static-libpython \
+    --disable-test-modules \
+    --with-readline=no \
     --without-system-expat \
     --without-system-libmpdec \
     --with-openssl="$DEPS_BUILD_DIR/openssl" \

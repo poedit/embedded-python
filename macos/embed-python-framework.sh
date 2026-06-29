@@ -52,6 +52,9 @@ cp -a "$SOURCE/lib/python$VERSION/"* "$DEST/Resources/Home/lib/python${VERSION}/
 rm -rf "$DEST/Resources/Home/lib/python${VERSION}/lib-dynload"
 ln -sf ../../../../Frameworks "$DEST/Resources/Home/lib/python${VERSION}/lib-dynload"
 
+# Remove packages not useful for embedded use:
+rm -rf "$DEST/Resources/Home/lib/python${VERSION}"/{idlelib,turtledemo,tkinter}
+
 
 # Apple thinks it owns org.python.python bundle id, so change it:
 #/usr/bin/sed -i "" -e "s/org.python.python/net.poedit.Python/g" "$DEST/Resources/Info.plist"
