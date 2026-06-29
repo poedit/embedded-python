@@ -55,6 +55,9 @@ ln -sf ../../../../Frameworks "$DEST/Resources/Home/lib/python${VERSION}/lib-dyn
 # Remove packages not useful for embedded use:
 rm -rf "$DEST/Resources/Home/lib/python${VERSION}"/{idlelib,turtledemo,tkinter}
 
+# Remove __pycache__ -- unnecessarily large, and the users of the package will want to minimize stdlib anyway:
+find "$DEST/Resources/Home/lib/python${VERSION}" -type d -name __pycache__ -prune -exec rm -rf {} +
+
 
 # Apple thinks it owns org.python.python bundle id, so change it:
 #/usr/bin/sed -i "" -e "s/org.python.python/net.poedit.Python/g" "$DEST/Resources/Info.plist"
