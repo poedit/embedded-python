@@ -33,9 +33,8 @@ rm -rf "$DEST/Resources/Python.app" && ln -sf ../Helpers/Python.app "$DEST/Resou
 
 
 # Create normal-looking PYTHONHOME to work with
-mkdir -p "$DEST"/Resources/Home/{lib,bin}
+mkdir -p "$DEST"/Resources/Home/{lib/python${VERSION},bin}
 
-ln -sf ../../../Frameworks "$DEST/Resources/Home/lib/python${VERSION}"
 ln -sf ../../../Helpers/python "$DEST/Resources/Home/bin/python.bin"
 
 cat >"$DEST/Resources/Home/bin/python" << EOF
@@ -48,8 +47,9 @@ chmod +x "$DEST/Resources/Home/bin/python"
 
 # Copy standard library to appropriate places:
 cp -a "$SOURCE/lib/python$VERSION/lib-dynload/"* "$DEST/Frameworks"
-cp -a "$SOURCE/lib/python$VERSION/"* "$DEST/Resources/Home/lib/"
-rm -rf "$DEST/Resources/Home/lib/lib-dynload"
+cp -a "$SOURCE/lib/python$VERSION/"* "$DEST/Resources/Home/lib/python${VERSION}/"
+rm -rf "$DEST/Resources/Home/lib/python${VERSION}/lib-dynload"
+ln -sf ../../../../Frameworks "$DEST/Resources/Home/lib/python${VERSION}/lib-dynload"
 
 
 # Apple thinks it owns org.python.python bundle id, so change it:
@@ -67,3 +67,5 @@ done
 # check linkage correctness:
 "$DEST_TOP/Versions/Current/Helpers/python" --version
 "$DEST_TOP/Versions/Current/Resources/Home/bin/python" --version
+# check runtime works:
+"$DEST_TOP/Versions/Current/Resources/Home/bin/python" -c 'import sys; print(sys.version)'
