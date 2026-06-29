@@ -37,11 +37,12 @@ mkdir -p "$DEST"/Resources/Home/{lib/python${VERSION},bin}
 
 ln -sf ../../../Helpers/python "$DEST/Resources/Home/bin/python.bin"
 
-cat >"$DEST/Resources/Home/bin/python" << EOF
+cat >"$DEST/Resources/Home/bin/python" << 'EOF'
 #!/bin/sh
-PYTHONHOME="\`dirname "\$0"\`/.."
+SELF="$(realpath "$0")"
+PYTHONHOME="$(realpath "$(dirname "$SELF")/..")"
 export PYTHONHOME
-exec "\$0.bin" "\$@"
+exec "$SELF.bin" "$@"
 EOF
 chmod +x "$DEST/Resources/Home/bin/python"
 
