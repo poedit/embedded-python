@@ -68,5 +68,8 @@ make install -j1 DESTDIR="$DEPS_DESTDIR/"
 mv "$DEPS_DESTDIR"/@rpath/* "$DEPS_DESTDIR"/
 "$TOP_SRCDIR/sanitize-python-framework.sh" "$DEPS_DESTDIR/Python.framework"
 
+# check linkage correctness:
+"$DEPS_DESTDIR/Python.framework/Versions/Current/bin/python" --version
+
 rm -rf "$WORKDIR"
 touch "$INTDIR/$target.done"

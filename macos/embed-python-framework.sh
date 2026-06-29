@@ -63,3 +63,7 @@ for fn in Python Headers Resources ; do
     rm -f "$DEST_TOP/$fn"
     ln -s "Versions/Current/$fn" "$DEST_TOP/$fn"
 done
+
+# check linkage correctness:
+"$DEST_TOP/Versions/Current/Helpers/python" --version
+"$DEST_TOP/Versions/Current/Resources/Home/bin/python" --version
