@@ -74,5 +74,15 @@ done
 # check linkage correctness:
 "$DEST_TOP/Versions/Current/Helpers/python" --version
 "$DEST_TOP/Versions/Current/Resources/Home/bin/python" --version
-# check runtime works:
-"$DEST_TOP/Versions/Current/Resources/Home/bin/python" -c 'import sys; print(sys.version)'
+
+# check that runtime works:
+MY_PYTHON="$DEST_TOP/Versions/Current/Resources/Home/bin/python"
+"$MY_PYTHON" -c 'import sys; print(sys.version)'
+"$MY_PYTHON" -c 'import os, sys; assert os.access(sys.executable, os.X_OK)'
+"$MY_PYTHON" -c 'import os, sys; assert os.access(sys._base_executable, os.X_OK);'
+
+# check that venv creation works:
+VENV_TEST_DIR="$(mktemp -d "${TMPDIR:-/tmp}/embedded-python-venv.XXXXXX")"
+trap 'rm -rf "$VENV_TEST_DIR"' EXIT
+"$MY_PYTHON" -m venv "$VENV_TEST_DIR"
+"$VENV_TEST_DIR/bin/python" -c 'import sys; print(f"venv test: {sys.version}"); assert sys.prefix != sys.base_prefix'
