@@ -34,23 +34,19 @@ rm -rf "$DEST/Resources/Python.app" && ln -sf ../Helpers/Python.app "$DEST/Resou
 
 # Create normal-looking PYTHONHOME to work with
 mkdir -p "$DEST"/Resources/Home/{lib/python${VERSION},bin}
-
-ln -sf ../../../Helpers/python "$DEST/Resources/Home/bin/python.bin"
-
-cat >"$DEST/Resources/Home/bin/python" << 'EOF'
-#!/bin/sh
-SELF="$(realpath "$0")"
-PYTHONHOME="$(realpath "$(dirname "$SELF")/..")"
-export PYTHONHOME
-exec "$SELF.bin" "$@"
-EOF
-chmod +x "$DEST/Resources/Home/bin/python"
+ln -sf ../../../Helpers/python "$DEST/Resources/Home/bin/python"
+ln -sf ../../../Helpers/python "$DEST/Resources/Home/bin/python${VERSION}"
+ln -sf ../../../Python "$DEST/Resources/Home/lib/libpython${VERSION}.dylib"
 
 # Copy standard library to appropriate places:
 cp -a "$SOURCE/lib/python$VERSION/lib-dynload/"* "$DEST/Frameworks"
 cp -a "$SOURCE/lib/python$VERSION/"* "$DEST/Resources/Home/lib/python${VERSION}/"
 rm -rf "$DEST/Resources/Home/lib/python${VERSION}/lib-dynload"
 ln -sf ../../../../Frameworks "$DEST/Resources/Home/lib/python${VERSION}/lib-dynload"
+
+# Create symlinks to stay compatible with Python framework standard workings:
+ln -sf Resources/Home/bin "$DEST/bin"
+ln -sf Resources/Home/lib "$DEST/lib"
 
 # Remove packages not useful for embedded use:
 rm -rf "$DEST/Resources/Home/lib/python${VERSION}"/{idlelib,turtledemo,tkinter}

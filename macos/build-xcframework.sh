@@ -34,17 +34,26 @@ xcodebuild -create-xcframework \
 mkdir -p "$package_path/bin"
 cp -a "$xcframework_path" "$package_path/"
 
+# create helper script to run python as part of builds:
 python_bin_path="$(find "$package_path/$name.xcframework" -path "*/$name.framework/Versions/*/Resources/Home/bin" -type d -print -quit)"
 if [ -z "$python_bin_path" ]; then
     echo "error: Python.framework Resources/Home/bin directory not found in $name.xcframework" >&2
     exit 1
 fi
 python_bin_path="${python_bin_path#$package_path/}"
-(
-    cd "$package_path/bin"
-    ln -s "../$python_bin_path"/python .
-)
 
+cat >"$package_path/bin/python" <<EOF
+#!/bin/sh
+SELF="\$(realpath "\$0")"
+ROOT="\$(dirname "\$SELF")/.."
+exec "\$ROOT/$python_bin_path/python" "\$@"
+EOF
+chmod +x "$package_path/bin/python"
+
+# test it works:
+"$package_path/bin/python" -c 'import sys; print(sys.version)'
+
+# package it all:
 (
     cd "$package_path"
     ditto -c -k --sequesterRsrc . "../$zip_name"
