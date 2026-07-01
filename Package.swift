@@ -16,8 +16,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "Python",
-            url: "https://github.com/poedit/python-framework/releases/download/v3.13.13/Python.xcframework.zip",
-            checksum: "0000000000000000000000000000000000000000000000000000000000000000"
+            url: "https://github.com/poedit/embedded-python/releases/download/v3.13.13/Python.xcframework.zip",
+            checksum: "85893b9f513810c422be84c2fb787c0b6ecdf9182979b9ac60aff5c61d982650"
         ),
     ]
 )
