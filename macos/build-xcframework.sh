@@ -9,13 +9,14 @@ cd "$(dirname "$0")/.."
 : "${PYTHON_VERSION:?}"
 
 name=Python
+scheme=EmbeddedPython
 build_dir=build/macos
 archive_path="$build_dir/macosx.xcarchive"
 xcframework_path="$build_dir/$name.xcframework"
 package_path="$build_dir/$name-package"
 zip_name="$name.xcframework.zip"
 zip_path="$build_dir/$zip_name"
-url="https://github.com/poedit/python-framework/releases/download/v$PYTHON_VERSION/$zip_name"
+url="https://github.com/poedit/embedded-python/releases/download/v$PYTHON_VERSION/$zip_name"
 
 mkdir -p "$build_dir"
 rm -rf "$archive_path" "$xcframework_path" "$package_path" "$zip_path"
@@ -24,7 +25,7 @@ xcodebuild archive \
     -quiet \
     -sdk macosx \
     -archivePath "$archive_path" \
-    -scheme "$name"
+    -scheme "$scheme"
 
 xcodebuild -create-xcframework \
     -output "$xcframework_path" \
